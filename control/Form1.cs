@@ -36,6 +36,22 @@ namespace control
         UpdateComTextEventHandler updateComText;                        //串口事件
         
 
+        //控制标志
+        enum car_status
+        {
+            READY,
+            MOVING
+        };
+
+        enum arm_status
+        {
+            READY,
+            MOVING
+        };
+
+        Thread thread;
+        static byte[] _ControlSocketClientData;
+        int _ControlSocketClientLength = 0;
         
         
         /// <summary> 构造函数
@@ -84,6 +100,11 @@ namespace control
             serialPort.DataReceived += new SerialDataReceivedEventHandler(dataRecive);  //处理串口对象的数据接受事件的方法
 
 
+            //控制部分线程初始化
+            ThreadStart threadStart = new ThreadStart(control);
+            thread = new Thread(threadStart);
+            _ControlSocketClientData = new byte[1024];
+
         }
 
         /*
@@ -123,7 +144,14 @@ namespace control
             else
             {
                 //串口没有打开，尝试打开
-                serialPort.PortName = comboBoxCom.SelectedItem.ToString();
+                try
+                {
+                    serialPort.PortName = comboBoxCom.SelectedItem.ToString();
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show(ex.Message,"错误",MessageBoxButtons.OK,MessageBoxIcon.Error);
+                }
                 serialPort.BaudRate = Convert.ToInt32(comboBoxBaudrate.SelectedItem.ToString());
                 serialPort.Parity = (Parity)Convert.ToInt32(comboBoxParity.SelectedIndex.ToString());
                 serialPort.StopBits = (StopBits)Convert.ToInt32(comboBoxStopbits.SelectedIndex.ToString());
@@ -431,6 +459,9 @@ namespace control
                     clientSocket.Close();
                     return;
                 }
+
+                Array.Copy(data, _ControlSocketClientData, length);     //控制用缓存
+                _ControlSocketClientLength = length;
 
                 //HEX显示或字符显示
                 if (_SocketClientHexRecive)
@@ -882,25 +913,156 @@ namespace control
          */
 
         #region
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void buttonControl_Click(object sender, EventArgs e)
         {
+            /*
             //初始化串口
             if(!serialPort.IsOpen)
             {
-                comOpen();
+                MessageBox.Show("请先打开串口！", "警告", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
 
             //初始化客户端
             if(!_SocketClientIsConnected)
             {
-                socketClientOpen();
+                MessageBox.Show("请先打开TCP 客户端", "警告", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
 
             //初始化服务端
             if(!_SocketServerIsConnected)
             {
-                socketServerOpen();
+                MessageBox.Show("请先打开TCP服务端", "警告", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
+            */
+            
+
+            if(thread.ThreadState != ThreadState.Unstarted && thread.ThreadState != ThreadState.Aborted && thread.ThreadState!= ThreadState.Stopped)
+            {
+                thread.Abort();
+                buttonControl.Text = "开始";
+            }
+            else
+            {
+                ThreadStart threadStart = new ThreadStart(control);
+                thread = new Thread(threadStart);
+                thread.Start();
+                buttonControl.Text = "停止";
+            }
+            
+        }
+
+        /// <summary> 控制线程
+        /// </summary>
+        private void control()
+        {
+            byte[] json = Encoding.ASCII.GetBytes("{\"name\":\"task_4_1\"}");       //出发
+            byte[] byteData = carPacketCreate(2002, 1,json);
+
+            _ControlSocketClientLength = 0;
+            if (socketClientSend(byteData) == -1)
+                return;
+
+            Thread.Sleep(5000);
+            //处理接收数据
+            if (_ControlSocketClientLength == 0)
+            {
+                MessageBox.Show("AGV指令超时！", "警告", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            if(_ControlSocketClientLength != 16)
+            {
+                MessageBox.Show("AGV指令错误!","警告",MessageBoxButtons.OK,MessageBoxIcon.Error);
+                return;
+            }
+
+            //循环查询运动状态
+
+
+
+            //机械臂
+            
+
+            //执行完成
+            this.Invoke(new Action(() =>
+            {
+                buttonControl.Text = "开始";
+            }));
+        }
+
+        /// <summary> 生成AGV通信包
+        /// </summary>
+        /// <param name="APICode"></param>
+        /// <param name="packetId"></param>
+        /// <param name="json"></param>
+        /// <returns></returns>
+        private byte[] carPacketCreate(int APICode, int packetId,byte[] json)
+        {
+            byte[] data = new byte[16 + json.Length];
+            int length = json.Length;
+
+            data[0] = 90;
+            data[1] = 1;
+            data[2] = (byte)((packetId >> 8) & 0xFF);
+            data[3] = (byte)(packetId & 0xFF);
+            data[4] = (byte)((length >> 24) & 0xFF);
+            data[5] = (byte)((length >> 16) & 0xFF);
+            data[6] = (byte)((length >> 8) & 0xFF);
+            data[7] = (byte)(length & 0xFF);
+            data[8] = (byte)((APICode >> 8) & 0xFF);
+            data[9] = (byte)(APICode & 0xFF);
+            data[10] = 0;
+            data[11] = 0;
+            data[12] = 0;
+            data[13] = 0;
+            data[14] = 0;
+            data[15] = 0;
+
+            Array.Copy(json, 0, data, 16, json.Length);
+            
+
+            return data;
+        }
+
+        /// <summary> socket client 发送数据
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns>异常 -1 正常 0</returns>
+        private int socketClientSend(byte[] data)
+        {
+            //异步发送
+            try
+            {
+                clientSocket.BeginSend(data, 0, data.Length, SocketFlags.None, ClientSendCallBack, clientSocket);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "警告", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _SocketClientIsConnected = false;
+                clientUIUpdate();
+                return -1;
+            }
+
+            string newString = "";
+            foreach (byte b in data)
+            {
+                newString += b.ToString("X").PadLeft(2, '0') + " ";
+            }
+
+            this.Invoke(new Action(() => 
+            {
+                textBoxSocketClientRecive.AppendText(newString + "\n");
+            }));
+
+            return 0;
         }
 
         #endregion
