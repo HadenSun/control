@@ -66,6 +66,22 @@
             this.buttonSocketClientOpen = new System.Windows.Forms.Button();
             this.checkBoxSocketClientHexSend = new System.Windows.Forms.CheckBox();
             this.checkBoxSocketClientHexRecive = new System.Windows.Forms.CheckBox();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.statusStrip3 = new System.Windows.Forms.StatusStrip();
+            this.toolStripStatusLabelClient2 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.textBoxSocketClientIp2 = new System.Windows.Forms.TextBox();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.buttonSocketClientSend2 = new System.Windows.Forms.Button();
+            this.textBoxSocketClientSend2 = new System.Windows.Forms.TextBox();
+            this.textBoxSocketClientRecive2 = new System.Windows.Forms.TextBox();
+            this.buttonSocketClientClean2 = new System.Windows.Forms.Button();
+            this.textBoxSocketClientPort2 = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.buttonSocketClientOpen2 = new System.Windows.Forms.Button();
+            this.checkBoxSocketClientHexSend2 = new System.Windows.Forms.CheckBox();
+            this.checkBoxSocketClientHexRecive2 = new System.Windows.Forms.CheckBox();
             this.tabPageTCPServer = new System.Windows.Forms.TabPage();
             this.comboBoxSocketServerIp = new System.Windows.Forms.ComboBox();
             this.statusStrip2 = new System.Windows.Forms.StatusStrip();
@@ -89,6 +105,8 @@
             this.tabPageCom.SuspendLayout();
             this.tabPageTCPClient.SuspendLayout();
             this.statusStrip1.SuspendLayout();
+            this.tabPage1.SuspendLayout();
+            this.statusStrip3.SuspendLayout();
             this.tabPageTCPServer.SuspendLayout();
             this.statusStrip2.SuspendLayout();
             this.tabPageControl.SuspendLayout();
@@ -98,10 +116,11 @@
             // 
             this.tabControl1.Controls.Add(this.tabPageCom);
             this.tabControl1.Controls.Add(this.tabPageTCPClient);
+            this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPageTCPServer);
             this.tabControl1.Controls.Add(this.tabPageControl);
             this.tabControl1.Location = new System.Drawing.Point(24, 24);
-            this.tabControl1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.tabControl1.Margin = new System.Windows.Forms.Padding(6);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(1408, 558);
@@ -129,9 +148,9 @@
             this.tabPageCom.Controls.Add(this.labelDatabits);
             this.tabPageCom.Controls.Add(this.comboBoxDatabits);
             this.tabPageCom.Location = new System.Drawing.Point(8, 39);
-            this.tabPageCom.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.tabPageCom.Margin = new System.Windows.Forms.Padding(6);
             this.tabPageCom.Name = "tabPageCom";
-            this.tabPageCom.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.tabPageCom.Padding = new System.Windows.Forms.Padding(6);
             this.tabPageCom.Size = new System.Drawing.Size(1392, 511);
             this.tabPageCom.TabIndex = 0;
             this.tabPageCom.Text = "串口";
@@ -141,7 +160,7 @@
             // 
             this.checkBoxComCheck.AutoSize = true;
             this.checkBoxComCheck.Location = new System.Drawing.Point(218, 334);
-            this.checkBoxComCheck.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.checkBoxComCheck.Margin = new System.Windows.Forms.Padding(6);
             this.checkBoxComCheck.Name = "checkBoxComCheck";
             this.checkBoxComCheck.Size = new System.Drawing.Size(90, 28);
             this.checkBoxComCheck.TabIndex = 38;
@@ -153,7 +172,7 @@
             // 
             this.checkBoxComHexSend.AutoSize = true;
             this.checkBoxComHexSend.Location = new System.Drawing.Point(16, 328);
-            this.checkBoxComHexSend.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.checkBoxComHexSend.Margin = new System.Windows.Forms.Padding(6);
             this.checkBoxComHexSend.Name = "checkBoxComHexSend";
             this.checkBoxComHexSend.Size = new System.Drawing.Size(126, 28);
             this.checkBoxComHexSend.TabIndex = 37;
@@ -165,7 +184,7 @@
             // 
             this.checkBoxComHexRecive.AutoSize = true;
             this.checkBoxComHexRecive.Location = new System.Drawing.Point(16, 284);
-            this.checkBoxComHexRecive.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.checkBoxComHexRecive.Margin = new System.Windows.Forms.Padding(6);
             this.checkBoxComHexRecive.Name = "checkBoxComHexRecive";
             this.checkBoxComHexRecive.Size = new System.Drawing.Size(126, 28);
             this.checkBoxComHexRecive.TabIndex = 36;
@@ -176,7 +195,7 @@
             // buttonComClear
             // 
             this.buttonComClear.Location = new System.Drawing.Point(198, 276);
-            this.buttonComClear.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.buttonComClear.Margin = new System.Windows.Forms.Padding(6);
             this.buttonComClear.Name = "buttonComClear";
             this.buttonComClear.Size = new System.Drawing.Size(150, 46);
             this.buttonComClear.TabIndex = 35;
@@ -187,7 +206,7 @@
             // buttonComSend
             // 
             this.buttonComSend.Location = new System.Drawing.Point(1230, 378);
-            this.buttonComSend.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.buttonComSend.Margin = new System.Windows.Forms.Padding(6);
             this.buttonComSend.Name = "buttonComSend";
             this.buttonComSend.Size = new System.Drawing.Size(150, 46);
             this.buttonComSend.TabIndex = 34;
@@ -198,7 +217,7 @@
             // textBoxComSend
             // 
             this.textBoxComSend.Location = new System.Drawing.Point(360, 378);
-            this.textBoxComSend.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.textBoxComSend.Margin = new System.Windows.Forms.Padding(6);
             this.textBoxComSend.Name = "textBoxComSend";
             this.textBoxComSend.Size = new System.Drawing.Size(854, 35);
             this.textBoxComSend.TabIndex = 33;
@@ -206,7 +225,7 @@
             // textBoxComRecive
             // 
             this.textBoxComRecive.Location = new System.Drawing.Point(360, 18);
-            this.textBoxComRecive.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.textBoxComRecive.Margin = new System.Windows.Forms.Padding(6);
             this.textBoxComRecive.Multiline = true;
             this.textBoxComRecive.Name = "textBoxComRecive";
             this.textBoxComRecive.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -226,7 +245,7 @@
             // buttonComRefresh
             // 
             this.buttonComRefresh.Location = new System.Drawing.Point(198, 378);
-            this.buttonComRefresh.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.buttonComRefresh.Margin = new System.Windows.Forms.Padding(6);
             this.buttonComRefresh.Name = "buttonComRefresh";
             this.buttonComRefresh.Size = new System.Drawing.Size(150, 46);
             this.buttonComRefresh.TabIndex = 31;
@@ -237,7 +256,7 @@
             // buttonComConnect
             // 
             this.buttonComConnect.Location = new System.Drawing.Point(16, 378);
-            this.buttonComConnect.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.buttonComConnect.Margin = new System.Windows.Forms.Padding(6);
             this.buttonComConnect.Name = "buttonComConnect";
             this.buttonComConnect.Size = new System.Drawing.Size(150, 46);
             this.buttonComConnect.TabIndex = 20;
@@ -249,7 +268,7 @@
             // 
             this.comboBoxCom.FormattingEnabled = true;
             this.comboBoxCom.Location = new System.Drawing.Point(106, 18);
-            this.comboBoxCom.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.comboBoxCom.Margin = new System.Windows.Forms.Padding(6);
             this.comboBoxCom.Name = "comboBoxCom";
             this.comboBoxCom.Size = new System.Drawing.Size(238, 32);
             this.comboBoxCom.TabIndex = 30;
@@ -274,7 +293,7 @@
             "Mark",
             "Space"});
             this.comboBoxParity.Location = new System.Drawing.Point(106, 224);
-            this.comboBoxParity.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.comboBoxParity.Margin = new System.Windows.Forms.Padding(6);
             this.comboBoxParity.Name = "comboBoxParity";
             this.comboBoxParity.Size = new System.Drawing.Size(238, 32);
             this.comboBoxParity.TabIndex = 29;
@@ -306,7 +325,7 @@
             "9600",
             "115200"});
             this.comboBoxBaudrate.Location = new System.Drawing.Point(106, 68);
-            this.comboBoxBaudrate.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.comboBoxBaudrate.Margin = new System.Windows.Forms.Padding(6);
             this.comboBoxBaudrate.Name = "comboBoxBaudrate";
             this.comboBoxBaudrate.Size = new System.Drawing.Size(238, 32);
             this.comboBoxBaudrate.TabIndex = 23;
@@ -320,7 +339,7 @@
             "2",
             "1.5"});
             this.comboBoxStopbits.Location = new System.Drawing.Point(106, 172);
-            this.comboBoxStopbits.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.comboBoxStopbits.Margin = new System.Windows.Forms.Padding(6);
             this.comboBoxStopbits.Name = "comboBoxStopbits";
             this.comboBoxStopbits.Size = new System.Drawing.Size(238, 32);
             this.comboBoxStopbits.TabIndex = 27;
@@ -344,7 +363,7 @@
             "7",
             "8"});
             this.comboBoxDatabits.Location = new System.Drawing.Point(106, 120);
-            this.comboBoxDatabits.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.comboBoxDatabits.Margin = new System.Windows.Forms.Padding(6);
             this.comboBoxDatabits.Name = "comboBoxDatabits";
             this.comboBoxDatabits.Size = new System.Drawing.Size(238, 32);
             this.comboBoxDatabits.TabIndex = 25;
@@ -366,9 +385,9 @@
             this.tabPageTCPClient.Controls.Add(this.checkBoxSocketClientHexSend);
             this.tabPageTCPClient.Controls.Add(this.checkBoxSocketClientHexRecive);
             this.tabPageTCPClient.Location = new System.Drawing.Point(8, 39);
-            this.tabPageTCPClient.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.tabPageTCPClient.Margin = new System.Windows.Forms.Padding(6);
             this.tabPageTCPClient.Name = "tabPageTCPClient";
-            this.tabPageTCPClient.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.tabPageTCPClient.Padding = new System.Windows.Forms.Padding(6);
             this.tabPageTCPClient.Size = new System.Drawing.Size(1392, 511);
             this.tabPageTCPClient.TabIndex = 1;
             this.tabPageTCPClient.Text = "TCP Client";
@@ -394,7 +413,7 @@
             // textBoxSocketClientIp
             // 
             this.textBoxSocketClientIp.Location = new System.Drawing.Point(12, 122);
-            this.textBoxSocketClientIp.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.textBoxSocketClientIp.Margin = new System.Windows.Forms.Padding(6);
             this.textBoxSocketClientIp.Name = "textBoxSocketClientIp";
             this.textBoxSocketClientIp.Size = new System.Drawing.Size(270, 35);
             this.textBoxSocketClientIp.TabIndex = 47;
@@ -404,7 +423,7 @@
             // 
             this.textBoxTcpClient.Enabled = false;
             this.textBoxTcpClient.Location = new System.Drawing.Point(14, 48);
-            this.textBoxTcpClient.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.textBoxTcpClient.Margin = new System.Windows.Forms.Padding(6);
             this.textBoxTcpClient.Name = "textBoxTcpClient";
             this.textBoxTcpClient.Size = new System.Drawing.Size(270, 35);
             this.textBoxTcpClient.TabIndex = 46;
@@ -413,7 +432,7 @@
             // buttonSocketClientSend
             // 
             this.buttonSocketClientSend.Location = new System.Drawing.Point(1230, 360);
-            this.buttonSocketClientSend.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.buttonSocketClientSend.Margin = new System.Windows.Forms.Padding(6);
             this.buttonSocketClientSend.Name = "buttonSocketClientSend";
             this.buttonSocketClientSend.Size = new System.Drawing.Size(150, 46);
             this.buttonSocketClientSend.TabIndex = 44;
@@ -424,7 +443,7 @@
             // textBoxSocketClientSend
             // 
             this.textBoxSocketClientSend.Location = new System.Drawing.Point(300, 360);
-            this.textBoxSocketClientSend.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.textBoxSocketClientSend.Margin = new System.Windows.Forms.Padding(6);
             this.textBoxSocketClientSend.Name = "textBoxSocketClientSend";
             this.textBoxSocketClientSend.Size = new System.Drawing.Size(914, 35);
             this.textBoxSocketClientSend.TabIndex = 43;
@@ -432,7 +451,7 @@
             // textBoxSocketClientRecive
             // 
             this.textBoxSocketClientRecive.Location = new System.Drawing.Point(300, 16);
-            this.textBoxSocketClientRecive.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.textBoxSocketClientRecive.Margin = new System.Windows.Forms.Padding(6);
             this.textBoxSocketClientRecive.Multiline = true;
             this.textBoxSocketClientRecive.Name = "textBoxSocketClientRecive";
             this.textBoxSocketClientRecive.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -442,7 +461,7 @@
             // buttonSocketClientClean
             // 
             this.buttonSocketClientClean.Location = new System.Drawing.Point(12, 298);
-            this.buttonSocketClientClean.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.buttonSocketClientClean.Margin = new System.Windows.Forms.Padding(6);
             this.buttonSocketClientClean.Name = "buttonSocketClientClean";
             this.buttonSocketClientClean.Size = new System.Drawing.Size(276, 46);
             this.buttonSocketClientClean.TabIndex = 41;
@@ -453,7 +472,7 @@
             // textBoxSocketClientPort
             // 
             this.textBoxSocketClientPort.Location = new System.Drawing.Point(12, 200);
-            this.textBoxSocketClientPort.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.textBoxSocketClientPort.Margin = new System.Windows.Forms.Padding(6);
             this.textBoxSocketClientPort.Name = "textBoxSocketClientPort";
             this.textBoxSocketClientPort.Size = new System.Drawing.Size(272, 35);
             this.textBoxSocketClientPort.TabIndex = 40;
@@ -492,7 +511,7 @@
             // buttonSocketClientOpen
             // 
             this.buttonSocketClientOpen.Location = new System.Drawing.Point(12, 356);
-            this.buttonSocketClientOpen.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.buttonSocketClientOpen.Margin = new System.Windows.Forms.Padding(6);
             this.buttonSocketClientOpen.Name = "buttonSocketClientOpen";
             this.buttonSocketClientOpen.Size = new System.Drawing.Size(276, 46);
             this.buttonSocketClientOpen.TabIndex = 35;
@@ -504,7 +523,7 @@
             // 
             this.checkBoxSocketClientHexSend.AutoSize = true;
             this.checkBoxSocketClientHexSend.Location = new System.Drawing.Point(156, 254);
-            this.checkBoxSocketClientHexSend.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.checkBoxSocketClientHexSend.Margin = new System.Windows.Forms.Padding(6);
             this.checkBoxSocketClientHexSend.Name = "checkBoxSocketClientHexSend";
             this.checkBoxSocketClientHexSend.Size = new System.Drawing.Size(126, 28);
             this.checkBoxSocketClientHexSend.TabIndex = 34;
@@ -516,13 +535,186 @@
             // 
             this.checkBoxSocketClientHexRecive.AutoSize = true;
             this.checkBoxSocketClientHexRecive.Location = new System.Drawing.Point(12, 254);
-            this.checkBoxSocketClientHexRecive.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.checkBoxSocketClientHexRecive.Margin = new System.Windows.Forms.Padding(6);
             this.checkBoxSocketClientHexRecive.Name = "checkBoxSocketClientHexRecive";
             this.checkBoxSocketClientHexRecive.Size = new System.Drawing.Size(126, 28);
             this.checkBoxSocketClientHexRecive.TabIndex = 33;
             this.checkBoxSocketClientHexRecive.Text = "HEX接收";
             this.checkBoxSocketClientHexRecive.UseVisualStyleBackColor = true;
             this.checkBoxSocketClientHexRecive.CheckedChanged += new System.EventHandler(this.checkBoxSocketClientHexRecive_CheckedChanged);
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.statusStrip3);
+            this.tabPage1.Controls.Add(this.textBoxSocketClientIp2);
+            this.tabPage1.Controls.Add(this.textBox2);
+            this.tabPage1.Controls.Add(this.buttonSocketClientSend2);
+            this.tabPage1.Controls.Add(this.textBoxSocketClientSend2);
+            this.tabPage1.Controls.Add(this.textBoxSocketClientRecive2);
+            this.tabPage1.Controls.Add(this.buttonSocketClientClean2);
+            this.tabPage1.Controls.Add(this.textBoxSocketClientPort2);
+            this.tabPage1.Controls.Add(this.label4);
+            this.tabPage1.Controls.Add(this.label5);
+            this.tabPage1.Controls.Add(this.label6);
+            this.tabPage1.Controls.Add(this.buttonSocketClientOpen2);
+            this.tabPage1.Controls.Add(this.checkBoxSocketClientHexSend2);
+            this.tabPage1.Controls.Add(this.checkBoxSocketClientHexRecive2);
+            this.tabPage1.Location = new System.Drawing.Point(8, 39);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Size = new System.Drawing.Size(1392, 511);
+            this.tabPage1.TabIndex = 4;
+            this.tabPage1.Text = "TCP Client2";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // statusStrip3
+            // 
+            this.statusStrip3.ImageScalingSize = new System.Drawing.Size(32, 32);
+            this.statusStrip3.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabelClient2});
+            this.statusStrip3.Location = new System.Drawing.Point(0, 489);
+            this.statusStrip3.Name = "statusStrip3";
+            this.statusStrip3.Padding = new System.Windows.Forms.Padding(2, 0, 28, 0);
+            this.statusStrip3.Size = new System.Drawing.Size(1392, 22);
+            this.statusStrip3.TabIndex = 62;
+            this.statusStrip3.Text = "statusStrip3";
+            // 
+            // toolStripStatusLabelClient2
+            // 
+            this.toolStripStatusLabelClient2.Name = "toolStripStatusLabelClient2";
+            this.toolStripStatusLabelClient2.Size = new System.Drawing.Size(0, 17);
+            // 
+            // textBoxSocketClientIp2
+            // 
+            this.textBoxSocketClientIp2.Location = new System.Drawing.Point(12, 114);
+            this.textBoxSocketClientIp2.Margin = new System.Windows.Forms.Padding(6);
+            this.textBoxSocketClientIp2.Name = "textBoxSocketClientIp2";
+            this.textBoxSocketClientIp2.Size = new System.Drawing.Size(270, 35);
+            this.textBoxSocketClientIp2.TabIndex = 61;
+            this.textBoxSocketClientIp2.Text = "192.168.192.10";
+            // 
+            // textBox2
+            // 
+            this.textBox2.Enabled = false;
+            this.textBox2.Location = new System.Drawing.Point(14, 40);
+            this.textBox2.Margin = new System.Windows.Forms.Padding(6);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(270, 35);
+            this.textBox2.TabIndex = 60;
+            this.textBox2.Text = "TCP Client";
+            // 
+            // buttonSocketClientSend2
+            // 
+            this.buttonSocketClientSend2.Location = new System.Drawing.Point(1230, 352);
+            this.buttonSocketClientSend2.Margin = new System.Windows.Forms.Padding(6);
+            this.buttonSocketClientSend2.Name = "buttonSocketClientSend2";
+            this.buttonSocketClientSend2.Size = new System.Drawing.Size(150, 46);
+            this.buttonSocketClientSend2.TabIndex = 59;
+            this.buttonSocketClientSend2.Text = "发送";
+            this.buttonSocketClientSend2.UseVisualStyleBackColor = true;
+            this.buttonSocketClientSend2.Click += new System.EventHandler(this.buttonSocketClientSend2_Click);
+            // 
+            // textBoxSocketClientSend2
+            // 
+            this.textBoxSocketClientSend2.Location = new System.Drawing.Point(300, 352);
+            this.textBoxSocketClientSend2.Margin = new System.Windows.Forms.Padding(6);
+            this.textBoxSocketClientSend2.Name = "textBoxSocketClientSend2";
+            this.textBoxSocketClientSend2.Size = new System.Drawing.Size(914, 35);
+            this.textBoxSocketClientSend2.TabIndex = 58;
+            // 
+            // textBoxSocketClientRecive2
+            // 
+            this.textBoxSocketClientRecive2.Location = new System.Drawing.Point(300, 8);
+            this.textBoxSocketClientRecive2.Margin = new System.Windows.Forms.Padding(6);
+            this.textBoxSocketClientRecive2.Multiline = true;
+            this.textBoxSocketClientRecive2.Name = "textBoxSocketClientRecive2";
+            this.textBoxSocketClientRecive2.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.textBoxSocketClientRecive2.Size = new System.Drawing.Size(1076, 324);
+            this.textBoxSocketClientRecive2.TabIndex = 57;
+            // 
+            // buttonSocketClientClean2
+            // 
+            this.buttonSocketClientClean2.Location = new System.Drawing.Point(12, 290);
+            this.buttonSocketClientClean2.Margin = new System.Windows.Forms.Padding(6);
+            this.buttonSocketClientClean2.Name = "buttonSocketClientClean2";
+            this.buttonSocketClientClean2.Size = new System.Drawing.Size(276, 46);
+            this.buttonSocketClientClean2.TabIndex = 56;
+            this.buttonSocketClientClean2.Text = "清空";
+            this.buttonSocketClientClean2.UseVisualStyleBackColor = true;
+            this.buttonSocketClientClean2.Click += new System.EventHandler(this.buttonSocketClientClean2_Click);
+            // 
+            // textBoxSocketClientPort2
+            // 
+            this.textBoxSocketClientPort2.Location = new System.Drawing.Point(12, 192);
+            this.textBoxSocketClientPort2.Margin = new System.Windows.Forms.Padding(6);
+            this.textBoxSocketClientPort2.Name = "textBoxSocketClientPort2";
+            this.textBoxSocketClientPort2.Size = new System.Drawing.Size(272, 35);
+            this.textBoxSocketClientPort2.TabIndex = 55;
+            this.textBoxSocketClientPort2.Text = "8080";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(8, 162);
+            this.label4.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(82, 24);
+            this.label4.TabIndex = 54;
+            this.label4.Text = "端口号";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(8, 84);
+            this.label5.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(82, 24);
+            this.label5.TabIndex = 53;
+            this.label5.Text = "IP地址";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(8, 8);
+            this.label6.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(106, 24);
+            this.label6.TabIndex = 52;
+            this.label6.Text = "协议类型";
+            // 
+            // buttonSocketClientOpen2
+            // 
+            this.buttonSocketClientOpen2.Location = new System.Drawing.Point(12, 348);
+            this.buttonSocketClientOpen2.Margin = new System.Windows.Forms.Padding(6);
+            this.buttonSocketClientOpen2.Name = "buttonSocketClientOpen2";
+            this.buttonSocketClientOpen2.Size = new System.Drawing.Size(276, 46);
+            this.buttonSocketClientOpen2.TabIndex = 51;
+            this.buttonSocketClientOpen2.Text = "连接";
+            this.buttonSocketClientOpen2.UseVisualStyleBackColor = true;
+            this.buttonSocketClientOpen2.Click += new System.EventHandler(this.buttonSocketClientOpen2_Click);
+            // 
+            // checkBoxSocketClientHexSend2
+            // 
+            this.checkBoxSocketClientHexSend2.AutoSize = true;
+            this.checkBoxSocketClientHexSend2.Location = new System.Drawing.Point(156, 246);
+            this.checkBoxSocketClientHexSend2.Margin = new System.Windows.Forms.Padding(6);
+            this.checkBoxSocketClientHexSend2.Name = "checkBoxSocketClientHexSend2";
+            this.checkBoxSocketClientHexSend2.Size = new System.Drawing.Size(126, 28);
+            this.checkBoxSocketClientHexSend2.TabIndex = 50;
+            this.checkBoxSocketClientHexSend2.Text = "HEX发送";
+            this.checkBoxSocketClientHexSend2.UseVisualStyleBackColor = true;
+            this.checkBoxSocketClientHexSend2.CheckedChanged += new System.EventHandler(this.checkBoxSocketClientHexSend2_CheckedChanged);
+            // 
+            // checkBoxSocketClientHexRecive2
+            // 
+            this.checkBoxSocketClientHexRecive2.AutoSize = true;
+            this.checkBoxSocketClientHexRecive2.Location = new System.Drawing.Point(12, 246);
+            this.checkBoxSocketClientHexRecive2.Margin = new System.Windows.Forms.Padding(6);
+            this.checkBoxSocketClientHexRecive2.Name = "checkBoxSocketClientHexRecive2";
+            this.checkBoxSocketClientHexRecive2.Size = new System.Drawing.Size(126, 28);
+            this.checkBoxSocketClientHexRecive2.TabIndex = 49;
+            this.checkBoxSocketClientHexRecive2.Text = "HEX接收";
+            this.checkBoxSocketClientHexRecive2.UseVisualStyleBackColor = true;
+            this.checkBoxSocketClientHexRecive2.CheckedChanged += new System.EventHandler(this.checkBoxSocketClientHexRecive2_CheckedChanged);
             // 
             // tabPageTCPServer
             // 
@@ -541,7 +733,7 @@
             this.tabPageTCPServer.Controls.Add(this.checkBoxSocketServerHexSend);
             this.tabPageTCPServer.Controls.Add(this.checkBoxSocketServerHexRecive);
             this.tabPageTCPServer.Location = new System.Drawing.Point(8, 39);
-            this.tabPageTCPServer.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.tabPageTCPServer.Margin = new System.Windows.Forms.Padding(6);
             this.tabPageTCPServer.Name = "tabPageTCPServer";
             this.tabPageTCPServer.Size = new System.Drawing.Size(1392, 511);
             this.tabPageTCPServer.TabIndex = 2;
@@ -552,7 +744,7 @@
             // 
             this.comboBoxSocketServerIp.FormattingEnabled = true;
             this.comboBoxSocketServerIp.Location = new System.Drawing.Point(10, 128);
-            this.comboBoxSocketServerIp.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.comboBoxSocketServerIp.Margin = new System.Windows.Forms.Padding(6);
             this.comboBoxSocketServerIp.Name = "comboBoxSocketServerIp";
             this.comboBoxSocketServerIp.Size = new System.Drawing.Size(272, 32);
             this.comboBoxSocketServerIp.TabIndex = 63;
@@ -578,7 +770,7 @@
             // 
             this.textBoxTcpServer.Enabled = false;
             this.textBoxTcpServer.Location = new System.Drawing.Point(12, 54);
-            this.textBoxTcpServer.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.textBoxTcpServer.Margin = new System.Windows.Forms.Padding(6);
             this.textBoxTcpServer.Name = "textBoxTcpServer";
             this.textBoxTcpServer.Size = new System.Drawing.Size(270, 35);
             this.textBoxTcpServer.TabIndex = 60;
@@ -587,7 +779,7 @@
             // buttonSocketServerSend
             // 
             this.buttonSocketServerSend.Location = new System.Drawing.Point(1228, 366);
-            this.buttonSocketServerSend.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.buttonSocketServerSend.Margin = new System.Windows.Forms.Padding(6);
             this.buttonSocketServerSend.Name = "buttonSocketServerSend";
             this.buttonSocketServerSend.Size = new System.Drawing.Size(150, 46);
             this.buttonSocketServerSend.TabIndex = 59;
@@ -598,7 +790,7 @@
             // textBoxSocketServerSend
             // 
             this.textBoxSocketServerSend.Location = new System.Drawing.Point(298, 366);
-            this.textBoxSocketServerSend.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.textBoxSocketServerSend.Margin = new System.Windows.Forms.Padding(6);
             this.textBoxSocketServerSend.Name = "textBoxSocketServerSend";
             this.textBoxSocketServerSend.Size = new System.Drawing.Size(914, 35);
             this.textBoxSocketServerSend.TabIndex = 58;
@@ -606,7 +798,7 @@
             // textBoxSocketServerRecive
             // 
             this.textBoxSocketServerRecive.Location = new System.Drawing.Point(298, 22);
-            this.textBoxSocketServerRecive.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.textBoxSocketServerRecive.Margin = new System.Windows.Forms.Padding(6);
             this.textBoxSocketServerRecive.Multiline = true;
             this.textBoxSocketServerRecive.Name = "textBoxSocketServerRecive";
             this.textBoxSocketServerRecive.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -616,7 +808,7 @@
             // buttonSocketServerClean
             // 
             this.buttonSocketServerClean.Location = new System.Drawing.Point(10, 304);
-            this.buttonSocketServerClean.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.buttonSocketServerClean.Margin = new System.Windows.Forms.Padding(6);
             this.buttonSocketServerClean.Name = "buttonSocketServerClean";
             this.buttonSocketServerClean.Size = new System.Drawing.Size(276, 46);
             this.buttonSocketServerClean.TabIndex = 56;
@@ -627,7 +819,7 @@
             // textBoxSocketServerPort
             // 
             this.textBoxSocketServerPort.Location = new System.Drawing.Point(10, 206);
-            this.textBoxSocketServerPort.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.textBoxSocketServerPort.Margin = new System.Windows.Forms.Padding(6);
             this.textBoxSocketServerPort.Name = "textBoxSocketServerPort";
             this.textBoxSocketServerPort.Size = new System.Drawing.Size(272, 35);
             this.textBoxSocketServerPort.TabIndex = 55;
@@ -666,7 +858,7 @@
             // buttonSocketServerOpen
             // 
             this.buttonSocketServerOpen.Location = new System.Drawing.Point(10, 362);
-            this.buttonSocketServerOpen.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.buttonSocketServerOpen.Margin = new System.Windows.Forms.Padding(6);
             this.buttonSocketServerOpen.Name = "buttonSocketServerOpen";
             this.buttonSocketServerOpen.Size = new System.Drawing.Size(276, 46);
             this.buttonSocketServerOpen.TabIndex = 51;
@@ -678,7 +870,7 @@
             // 
             this.checkBoxSocketServerHexSend.AutoSize = true;
             this.checkBoxSocketServerHexSend.Location = new System.Drawing.Point(154, 260);
-            this.checkBoxSocketServerHexSend.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.checkBoxSocketServerHexSend.Margin = new System.Windows.Forms.Padding(6);
             this.checkBoxSocketServerHexSend.Name = "checkBoxSocketServerHexSend";
             this.checkBoxSocketServerHexSend.Size = new System.Drawing.Size(126, 28);
             this.checkBoxSocketServerHexSend.TabIndex = 50;
@@ -690,7 +882,7 @@
             // 
             this.checkBoxSocketServerHexRecive.AutoSize = true;
             this.checkBoxSocketServerHexRecive.Location = new System.Drawing.Point(10, 260);
-            this.checkBoxSocketServerHexRecive.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.checkBoxSocketServerHexRecive.Margin = new System.Windows.Forms.Padding(6);
             this.checkBoxSocketServerHexRecive.Name = "checkBoxSocketServerHexRecive";
             this.checkBoxSocketServerHexRecive.Size = new System.Drawing.Size(126, 28);
             this.checkBoxSocketServerHexRecive.TabIndex = 49;
@@ -702,7 +894,7 @@
             // 
             this.tabPageControl.Controls.Add(this.buttonControl);
             this.tabPageControl.Location = new System.Drawing.Point(8, 39);
-            this.tabPageControl.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.tabPageControl.Margin = new System.Windows.Forms.Padding(6);
             this.tabPageControl.Name = "tabPageControl";
             this.tabPageControl.Size = new System.Drawing.Size(1392, 511);
             this.tabPageControl.TabIndex = 3;
@@ -713,7 +905,7 @@
             // 
             this.buttonControl.Font = new System.Drawing.Font("微软雅黑", 42F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.buttonControl.Location = new System.Drawing.Point(6, 6);
-            this.buttonControl.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.buttonControl.Margin = new System.Windows.Forms.Padding(6);
             this.buttonControl.Name = "buttonControl";
             this.buttonControl.Size = new System.Drawing.Size(402, 494);
             this.buttonControl.TabIndex = 0;
@@ -727,7 +919,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1450, 590);
             this.Controls.Add(this.tabControl1);
-            this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.Margin = new System.Windows.Forms.Padding(6);
             this.Name = "Form1";
             this.Text = "Form1";
             this.tabControl1.ResumeLayout(false);
@@ -737,6 +929,10 @@
             this.tabPageTCPClient.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
+            this.tabPage1.ResumeLayout(false);
+            this.tabPage1.PerformLayout();
+            this.statusStrip3.ResumeLayout(false);
+            this.statusStrip3.PerformLayout();
             this.tabPageTCPServer.ResumeLayout(false);
             this.tabPageTCPServer.PerformLayout();
             this.statusStrip2.ResumeLayout(false);
@@ -804,6 +1000,22 @@
         private System.Windows.Forms.CheckBox checkBoxSocketServerHexRecive;
         private System.Windows.Forms.ComboBox comboBoxSocketServerIp;
         private System.Windows.Forms.Button buttonControl;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.StatusStrip statusStrip3;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelClient2;
+        private System.Windows.Forms.TextBox textBoxSocketClientIp2;
+        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.Button buttonSocketClientSend2;
+        private System.Windows.Forms.TextBox textBoxSocketClientSend2;
+        private System.Windows.Forms.TextBox textBoxSocketClientRecive2;
+        private System.Windows.Forms.Button buttonSocketClientClean2;
+        private System.Windows.Forms.TextBox textBoxSocketClientPort2;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Button buttonSocketClientOpen2;
+        private System.Windows.Forms.CheckBox checkBoxSocketClientHexSend2;
+        private System.Windows.Forms.CheckBox checkBoxSocketClientHexRecive2;
     }
 }
 

@@ -23,13 +23,20 @@ namespace control
         private bool _SocketClientHexRecive = false;
         private bool _SocketClientHexSend = false;
         private bool _SocketClientIsConnected = false;
+        private bool _SocketClientHexRecive2 = false;
+        private bool _SocketClientHexSend2 = false;
+        private bool _SocketClientIsConnected2 = false;
         private bool _SocketServerHexRecive = false;
         private bool _SocketServerHexSend = false;
         private bool _SocketServerIsConnected = false;
         Socket clientSocket;
+        Socket clientSocket2;
         Socket serverSocket;
         List<Socket> socketList = new List<Socket>();
-        private static byte[] data = new byte[2048];
+        private static byte[] clientData = new byte[2048];
+        private static byte[] serverData = new byte[2048];
+        private static byte[] clientData2 = new byte[2048];
+        
 
         //变量定义
         delegate void UpdateComTextEventHandler(string text);           //串口委托
@@ -52,6 +59,8 @@ namespace control
         Thread thread;
         static byte[] _ControlSocketClientData;
         int _ControlSocketClientLength = 0;
+        static byte[] _ControlSocketClientData2;
+        int _ContorlSocketClientLength2 = 0;
         
         
         /// <summary> 构造函数
@@ -103,7 +112,10 @@ namespace control
             //控制部分线程初始化
             ThreadStart threadStart = new ThreadStart(control);
             thread = new Thread(threadStart);
+
             _ControlSocketClientData = new byte[1024];
+            _ControlSocketClientData2 = new byte[1024];
+            
 
         }
 
@@ -392,7 +404,7 @@ namespace control
                     buttonSocketClientOpen.Text = "断开";
                     toolStripStatusLabelClient.Text = "连接成功";
                     //异步接收
-                    clientSocket.BeginReceive(data, 0, 1024, SocketFlags.None, ClientReceiveCallBack, clientSocket);
+                    clientSocket.BeginReceive(clientData, 0, 1024, SocketFlags.None, ClientReceiveCallBack, clientSocket);
                     _SocketClientIsConnected = true;
                 }
                 catch (Exception ex)
@@ -444,7 +456,7 @@ namespace control
                 //将传入的clientSocket进行接收，并且完成接收数据的操作
                 clientSocket = result.AsyncState as Socket;
                 int length = clientSocket.EndReceive(result);
-                string message = Encoding.ASCII.GetString(data, 0, length);
+                string message = Encoding.ASCII.GetString(clientData, 0, length);
                 string newString = "";
 
                 //如果客户端正常关闭后，会向服务端发送长度为0的空数据，利用这一点将这个客户端关闭
@@ -460,7 +472,7 @@ namespace control
                     return;
                 }
 
-                Array.Copy(data, _ControlSocketClientData, length);     //控制用缓存
+                Array.Copy(clientData, _ControlSocketClientData, length);     //控制用缓存
                 _ControlSocketClientLength = length;
 
                 //HEX显示或字符显示
@@ -482,7 +494,7 @@ namespace control
                 }));
 
                 //重新调用开始接收数据
-                clientSocket.BeginReceive(data, 0, 1024, SocketFlags.None, ClientReceiveCallBack, clientSocket);
+                clientSocket.BeginReceive(clientData, 0, 1024, SocketFlags.None, ClientReceiveCallBack, clientSocket);
             }
             catch (Exception e)
             {
@@ -543,6 +555,9 @@ namespace control
                 _SocketClientIsConnected = false;
                 clientUIUpdate();
             }
+
+            string boxData = data + "\n";
+            textBoxSocketClientRecive.AppendText(boxData);
 
         }
 
@@ -611,7 +626,282 @@ namespace control
 
         #endregion
 
-        
+
+        /*
+         * ************************************************************************************
+         *                                  TCP Client2 部分程序
+         * ************************************************************************************
+         */
+
+        #region TCP Client2程序
+
+        /// <summary> Socket 连接打开
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void buttonSocketClientOpen2_Click(object sender, EventArgs e)
+        {
+            socketClientOpen2();
+        }
+
+        /// <summary> socket Client 打开连接
+        /// </summary>
+        private void socketClientOpen2()
+        {
+            IPAddress ip;
+            int port;
+
+            //获取IP 和端口，并处理异常
+            try
+            {
+                ip = IPAddress.Parse(textBoxSocketClientIp2.Text);
+                port = Convert.ToInt32(textBoxSocketClientPort2.Text);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            IPEndPoint ipe = new IPEndPoint(ip, port);
+            clientSocket2 = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+
+
+            if (!_SocketClientIsConnected2)
+            {
+                //连接服务器
+                try
+                {
+                    clientSocket2.Connect(ipe);
+                    //更新UI
+                    buttonSocketClientOpen2.Text = "断开";
+                    toolStripStatusLabelClient2.Text = "连接成功";
+                    //异步接收
+                    clientSocket2.BeginReceive(clientData2, 0, 1024, SocketFlags.None, ClientReceiveCallBack2, clientSocket2);
+                    _SocketClientIsConnected2 = true;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "警告", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    _SocketClientIsConnected2 = false;
+                }
+
+
+            }
+            else
+            {
+                try
+                {
+                    clientSocket2.Shutdown(SocketShutdown.Both);
+                }
+                catch (Exception ex)
+                {
+
+                }
+                try
+                {
+                    clientSocket2.Close();
+                }
+                catch (Exception)
+                {
+
+                }
+
+                _SocketClientIsConnected2 = false;
+                buttonSocketClientOpen2.Text = "连接";
+
+            }
+
+            //更新UI
+            clientUIUpdate2();
+        }
+
+        /// <summary> 异步接受数据
+        /// </summary>
+        /// <param name="result"></param>
+        private void ClientReceiveCallBack2(IAsyncResult result)
+        {
+            //声明一个空的Socket
+            Socket clientSocket = null;
+            //当客户端被暴力关掉后，会造成服务器端的报警，这里将它try catch起来，防止程序崩溃
+            try
+            {
+                //将传入的clientSocket进行接收，并且完成接收数据的操作
+                clientSocket = result.AsyncState as Socket;
+                int length = clientSocket.EndReceive(result);
+                string message = Encoding.ASCII.GetString(clientData2, 0, length);
+                string newString = "";
+
+                //如果客户端正常关闭后，会向服务端发送长度为0的空数据，利用这一点将这个客户端关闭
+                if (length == 0)
+                {
+                    this.Invoke(new Action(() =>
+                    {
+                        toolStripStatusLabelClient2.Text = clientSocket.RemoteEndPoint.ToString() + "断开";
+                        _SocketClientIsConnected2 = false;
+                        clientUIUpdate2();       //更新UI
+                    }));
+                    clientSocket.Close();
+                    return;
+                }
+
+                Array.Copy(clientData2, _ControlSocketClientData2, length);     //控制用缓存
+                _ContorlSocketClientLength2 = length;
+
+                //HEX显示或字符显示
+                if (_SocketClientHexRecive2)
+                {
+                    foreach (byte b in message)
+                    {
+                        newString += b.ToString("X").PadLeft(2, '0') + " ";
+                    }
+                }
+                else
+                {
+                    newString = message;
+                }
+
+                this.Invoke(new Action(() =>
+                {
+                    textBoxSocketClientRecive2.AppendText(newString + "\n");
+                }));
+
+                //重新调用开始接收数据
+                clientSocket.BeginReceive(clientData2, 0, 1024, SocketFlags.None, ClientReceiveCallBack2, clientSocket);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                if (clientSocket != null)
+                {
+                    clientSocket.Close();
+                    _SocketClientIsConnected2 = false;
+
+                    this.Invoke(new Action(() =>
+                    {
+                        clientUIUpdate2();       //更新UI
+                    }));
+                }
+            }
+        }
+
+
+        /// <summary> Socket 发送按钮点击
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void buttonSocketClientSend2_Click(object sender, EventArgs e)
+        {
+            string data = textBoxSocketClientSend2.Text;
+            byte[] byteData = new byte[1];
+
+            //HEX发送或字符发送
+            if (_SocketClientHexSend2)
+            {
+                try
+                {
+                    string da = data.Replace(" ", "");
+                    if ((da.Length % 2) != 0)
+                    {
+                        da += " ";
+                    }
+                    byteData = new byte[da.Length / 2];
+                    for (int i = 0; i < byteData.Length; i++)
+                    {
+                        byteData[i] = Convert.ToByte(da.Substring(i * 2, 2), 16);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            else
+            {
+                byteData = Encoding.ASCII.GetBytes(data);
+            }
+
+            //异步发送
+            try
+            {
+                clientSocket2.BeginSend(byteData, 0, byteData.Length, SocketFlags.None, ClientSendCallBack2, clientSocket2);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "警告", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _SocketClientIsConnected2 = false;
+                clientUIUpdate2();
+            }
+
+            string boxData = data + "\n";
+            textBoxSocketClientRecive2.AppendText(boxData);
+
+        }
+
+        /// <summary> Socket异步发送
+        /// </summary>
+        /// <param name="result"></param>
+        private void ClientSendCallBack2(IAsyncResult result)
+        {
+            try
+            {
+                Socket client = result.AsyncState as Socket;
+
+                int btyesSent = client.EndSend(result);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _SocketClientIsConnected2 = false;
+                clientUIUpdate2();
+            }
+        }
+
+        /// <summary> Socket Client UI更新
+        /// </summary>
+        private void clientUIUpdate2()
+        {
+            if (_SocketClientIsConnected2)
+            {
+                buttonSocketClientOpen2.Text = "断开";
+            }
+            else
+            {
+                buttonSocketClientOpen2.Text = "连接";
+                toolStripStatusLabelClient2.Text = "连接断开";
+            }
+            textBoxSocketClientIp2.Enabled = !_SocketClientIsConnected2;
+            textBoxSocketClientPort2.Enabled = !_SocketClientIsConnected2;
+        }
+
+        /// <summary> socket HEX接收勾选框
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void checkBoxSocketClientHexRecive2_CheckedChanged(object sender, EventArgs e)
+        {
+            _SocketClientHexRecive2 = checkBoxSocketClientHexRecive2.Checked;
+        }
+
+        /// <summary> socket HEX发送勾选框
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void checkBoxSocketClientHexSend2_CheckedChanged(object sender, EventArgs e)
+        {
+            _SocketClientHexSend2 = checkBoxSocketClientHexSend2.Checked;
+        }
+
+        /// <summary> 清空接收显示区域
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void buttonSocketClientClean2_Click(object sender, EventArgs e)
+        {
+            textBoxSocketClientRecive2.Clear();
+        }
+
+        #endregion
 
 
         /*
@@ -705,7 +995,7 @@ namespace control
             //在接收到一台要连入的计算机后，我们要获得接入的计算机的信息，//就需要一个Socket专门用于和它通信。我们再声明一个clientSocket,//用于接收和发送接入方的数据
             Socket clientSocket = serverSocket.EndAccept(result);
             //在获得这个clientSocket后，使用BeginReceive方法来接收数据 
-            clientSocket.BeginReceive(data, 0, 1024, SocketFlags.None, ServerReceiveCallBack, clientSocket);
+            clientSocket.BeginReceive(serverData, 0, 1024, SocketFlags.None, ServerReceiveCallBack, clientSocket);
             //建立了通信，开启接收数据后，我们要循环接收其他要连接的计算机，所以这里接着进行等待接收，这样就实现了一个循环不断的接收
             serverSocket.BeginAccept(AcceptCallBack, serverSocket);
 
@@ -731,7 +1021,7 @@ namespace control
                 //将传入的clientSocket进行接收，并且完成接收数据的操作
                 clientSocket = result.AsyncState as Socket;
                 int length = clientSocket.EndReceive(result);
-                string message = Encoding.ASCII.GetString(data, 0, length);
+                string message = Encoding.ASCII.GetString(serverData, 0, length);
                 string newString = "";
 
                 //如果客户端正常关闭后，会向服务端发送长度为0的空数据，利用这一点将这个客户端关闭
@@ -766,7 +1056,7 @@ namespace control
                 }));
 
                 //重新调用开始接收数据
-                clientSocket.BeginReceive(data, 0, 1024, SocketFlags.None, ServerReceiveCallBack, clientSocket);
+                clientSocket.BeginReceive(serverData, 0, 1024, SocketFlags.None, ServerReceiveCallBack, clientSocket);
             }
             catch (Exception e)
             {
@@ -912,7 +1202,7 @@ namespace control
          * ************************************************************************************
          */
 
-        #region
+        #region 控制程序
 
         /// <summary>
         /// 
@@ -971,7 +1261,7 @@ namespace control
             if (socketClientSend(byteData) == -1)
                 return;
 
-            Thread.Sleep(5000);
+            Thread.Sleep(500);
             //处理接收数据
             if (_ControlSocketClientLength == 0)
             {
@@ -985,7 +1275,17 @@ namespace control
             }
 
             //循环查询运动状态
+            while(true)
+            {
+                json = Encoding.ASCII.GetBytes("{\"simple\":true}");
+                byteData = carPacketCreate(1020, 1, json);
 
+                _ContorlSocketClientLength2 = 0;
+                if (socketClient2Send(byteData) == -1)
+                    return;
+
+                Thread.Sleep(500);
+            }
 
 
             //机械臂
@@ -1064,6 +1364,40 @@ namespace control
 
             return 0;
         }
+
+        /// <summary> socket client2 发送数据
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns>异常 -1 正常 0</returns>
+        private int socketClient2Send(byte[] data)
+        {
+            //异步发送
+            try
+            {
+                clientSocket2.BeginSend(data, 0, data.Length, SocketFlags.None, ClientSendCallBack, clientSocket2);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "警告", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _SocketClientIsConnected2 = false;
+                clientUIUpdate2();
+                return -1;
+            }
+
+            string newString = "";
+            foreach (byte b in data)
+            {
+                newString += b.ToString("X").PadLeft(2, '0') + " ";
+            }
+
+            this.Invoke(new Action(() =>
+            {
+                textBoxSocketClientRecive2.AppendText(newString + "\n");
+            }));
+
+            return 0;
+        }
+
 
         #endregion
 
